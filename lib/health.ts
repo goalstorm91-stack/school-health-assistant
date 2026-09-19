@@ -16,14 +16,7 @@ export const shiftDay=(s:string,n:number)=>day(new Date(new Date(s+'T12:00:00+09
 export const studentLabel=(s:Student)=>`${s.name} · ${s.grade}학년 ${s.room}반 ${s.number}번`;
 export function blankVisit():Visit{return {id:crypto.randomUUID(),studentId:'',at:new Date().toISOString(),createdAt:new Date().toISOString(),symptoms:[],place:'미확인',temperature:null,treatments:[],usage:{},allocations:[],status:'관찰 중',exitAt:'',contacted:'미연락',contactAt:'',guardian:'',note:''}}
 export const activeVisits=(s:State)=>s.visits.filter(v=>!v.cancelled);
-export function seed(now=new Date()):State {
- const today=day(now);const students:Student[]=['김하늘','이서준','박지우','최서연','정도윤','강민서','윤지호','김하늘','한예린','오수빈','조유준','임다은'].map((name,i)=>({id:'s'+i,name,grade:i%6+1,room:i%3+1,number:i+1}));
- const items=[{id:'band',name:'일회용 밴드',unit:'매',minimum:20},{id:'gauze',name:'멸균 거즈',unit:'매',minimum:15},{id:'ice',name:'냉찜질 팩',unit:'개',minimum:5},{id:'swab',name:'소독용 솜',unit:'매',minimum:30}];
- const batches:Batch[]=[{id:'b1',itemId:'band',lot:'B-2026-01',expires:shiftDay(today,180),quantity:86},{id:'b2',itemId:'gauze',lot:'G-2026-01',expires:shiftDay(today,25),quantity:12},{id:'b3',itemId:'ice',lot:'I-2026-01',expires:'',quantity:8},{id:'b4',itemId:'swab',lot:'S-2026-01',expires:shiftDay(today,90),quantity:120}];
- const visits:Visit[]=Array.from({length:36},(_,i)=>{const at=i<12?new Date(now.getTime()-(i+1)*7*60000).toISOString():new Date(new Date(shiftDay(today,-(i%21+1))+'T10:20:00+09:00')).toISOString();const status=i<2?'관찰 중':i===2?'귀가':'교실 복귀';return {id:'v'+i,studentId:'s'+(i<12?i:i%4),at,createdAt:at,symptoms:[symptoms[i%5]],place:i%2?'교실':'운동장',temperature:null,treatments:[i%2?'안정':'상처 처치'],usage:{},allocations:[],status,exitAt:status==='관찰 중'?'':new Date(new Date(at).getTime()+5*60000).toISOString(),contacted:status==='귀가'?'연락 완료':'미연락',contactAt:status==='귀가'?at:'',guardian:status==='귀가'?'보호자':'',note:''}});
- const tasks:Task[]=[{id:'t1',title:'건강검사 안내문 검토',date:today,category:'건강검사',done:false},{id:'t2',title:'2학기 감염병 예방교육 준비',date:today,category:'교육',done:false},{id:'t3',title:'보건실 소모품 점검',date:today,category:'기타',done:true},{id:'t4',title:'월간 보건실 운영 보고 제출',date:shiftDay(today,3),category:'제출',done:false},{id:'t5',title:'신체발달상황 검사 일정 확인',date:shiftDay(today,-1),category:'건강검사',done:false}];
- return {students,items,batches,visits,tasks,movements:batches.map(b=>({id:'m'+b.id,at:now.toISOString(),batchId:b.id,quantity:b.quantity,reason:'데모 초기 입고'}))};
-}
+export function emptyState():State {return {students:[],visits:[],items:[],batches:[],movements:[],tasks:[]};}
 export function saveVisit(state:State,input:Visit,now=new Date()):State {
  const v=structuredClone(input); const old=state.visits.find(x=>x.id===v.id);
  if(old?.cancelled)throw Error('취소된 방문은 수정할 수 없습니다.');

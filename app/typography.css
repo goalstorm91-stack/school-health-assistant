@@ -66,3 +66,4 @@ td { font-size: 1rem; line-height: 1.65; }
   .topbar { flex-wrap: wrap; min-height: 4.75rem; height: auto; padding-block: .75rem; }
   .calendar button { font-size: .875rem!important; }
 }
+ .app-credit{text-align:center;padding:24px 0 12px;font-size:14px;font-weight:600;color:#52676a}.import-form select{padding:10px;border:1px solid #c7d4d2;border-radius:8px;background:white;max-width:100%}.import-preview{max-height:280px;overflow:auto}.import-preview table{width:100%;text-align:left;border-collapse:collapse}.import-preview td,.import-preview th{padding:10px;border-bottom:1px solid #dbe4e2}

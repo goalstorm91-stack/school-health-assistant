@@ -5,7 +5,7 @@ import "./typography.css";
 
 export const metadata: Metadata = {
   title: "보건교사 업무 비서",
-  description: "초등학교 보건교사를 위한 업무 공간 · 가상 데이터 데모",
+  description: "초등학교 보건교사를 위한 업무 공간",
   other: {
     "codex-preview": "development",
   },

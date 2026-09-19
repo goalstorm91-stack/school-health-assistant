@@ -1,6 +1,7 @@
+import {seed} from './fixtures.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {seed,blankVisit,saveVisit,cancelVisit,aggregate,selectVisits,safeSummary,day,shiftDay,patterns,adjustStock} from '../lib/health.ts';
+import {blankVisit,saveVisit,cancelVisit,aggregate,selectVisits,safeSummary,day,shiftDay,patterns,adjustStock} from '../lib/health.ts';
 function fixture(){const s=seed();const v={...blankVisit(),studentId:'s4',symptoms:['두통','복통'],usage:{band:2}};return {s,v};}
 test('visit save, replay, edit, discharge and cancellation conserve inventory',()=>{const {s,v}=fixture();const a=saveVisit(s,v);assert.equal(a.batches[0].quantity,84);const b=saveVisit(a,v);assert.equal(b.batches[0].quantity,84);assert.equal(b.visits.length,a.visits.length);assert.equal(b.movements.length,a.movements.length);const c=saveVisit(b,{...v,usage:{band:5}});assert.equal(c.batches[0].quantity,81);const d=saveVisit(c,{...v,usage:{band:1},status:'교실 복귀',exitAt:new Date().toISOString()});assert.equal(d.batches[0].quantity,85);const e=cancelVisit(d,v.id);assert.equal(e.batches[0].quantity,86);assert.deepEqual(cancelVisit(e,v.id),e);assert.equal(selectVisits(e,day(),day()).some(x=>x.id===v.id),false);});
 test('insufficient stock leaves all original records and lots untouched',()=>{const {s,v}=fixture();const before=structuredClone(s);assert.throws(()=>saveVisit(s,{...v,usage:{band:1,gauze:999}}),/재고/);assert.deepEqual(s,before);});
