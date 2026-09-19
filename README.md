@@ -1,10 +1,16 @@
 # 보건교사 업무 비서
 
-초등학교 보건업무를 위한 React 19 / TypeScript / Vinext 시제품입니다. 모든 학생과 방문 내역은 가상 데이터이며, 데이터는 현재 탭의 메모리에만 저장됩니다. 새로고침 시 초기화됩니다. 실제 학생정보를 입력하지 마세요.
+초등학교 보건업무를 위한 React 19 / TypeScript / Next.js 시제품입니다. 모든 학생과 방문 내역은 가상 데이터이며, 데이터는 현재 탭의 메모리에만 저장됩니다. 새로고침 시 초기화됩니다. 실제 학생정보를 입력하지 마세요.
 
 ## 실행
 
-Node 22.13 이상에서 `npm ci`, `npm run dev`를 실행합니다. 로컬 주소는 http://localhost:5173 입니다. `npm run build`로 Cloudflare Worker 배포 산출물을 생성합니다.
+Node 22에서 `npm ci`, `npm run dev`를 실행합니다. 로컬 주소는 http://localhost:5173 입니다. `npm run build`로 Next.js 배포 산출물을 생성하고 `npm start`로 실행합니다.
+
+## Vercel 배포
+
+GitHub 저장소를 Vercel에서 가져오면 `vercel.json`에 따라 Next.js로 빌드됩니다. 루트 디렉터리는 저장소 최상위이며, 현재 데모에는 환경변수나 외부 DB가 필요하지 않습니다. GitHub의 main 브랜치를 배포 브랜치로 사용합니다.
+
+기존 Sites 환경의 명령은 `dev:sites`, `build:sites`, `start:sites`로 보존했습니다. Vercel에서는 Sites 전용 인증 및 Cloudflare 바인딩을 사용하지 않습니다. 이 데모에 학교 인증이나 영구 저장 기능이 추가되는 것은 아닙니다.
 
 검증: `node --experimental-strip-types --test tests/health.test.ts`, `npx tsc --noEmit`.
 
