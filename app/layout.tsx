@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./health.css";
+import "./typography.css";
 
 export const metadata: Metadata = {
   title: "보건교사 업무 비서",
@@ -21,6 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
+      <head><link rel="preload" href="/fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossOrigin="anonymous" /></head>
       <body className="antialiased">{children}</body>
     </html>
   );
